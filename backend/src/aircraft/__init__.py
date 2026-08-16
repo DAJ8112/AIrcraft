@@ -3,4 +3,4 @@
 from .analytics import AircraftMaintenanceAnalyzer
 from .maintenance_analyzer import AircraftEngineeringAnalytics
 
-__all__ = ["AircraftMaintenanceAnalyzer", "AircraftEngineeringAnalytics"]
+__all__ = ["AircraftEngineeringAnalytics", "AircraftMaintenanceAnalyzer"]
