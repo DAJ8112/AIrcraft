@@ -1,0 +1,28 @@
+# Virtualenv — ~193 MB of macOS-built binaries with symlinks to /Users/...
+# Never used in the image: dependencies install with `uv pip install --system`.
+.venv/
+
+# Python bytecode
+**/__pycache__/
+**/*.py[cod]
+
+# Secrets — never bake credentials into an image layer.
+# Pass them at run time instead: docker run --env-file .env ...
+.env
+.env.*
+
+# Notebooks — development only, not imported by the app
+**/*.ipynb
+**/.ipynb_checkpoints/
+
+# Excel lock files (e.g. data/~$aircraft_logs_data.xlsx)
+**/~$*
+
+# macOS cruft
+**/.DS_Store
+
+# Git and Docker metadata
+.git/
+.gitignore
+Dockerfile
+.dockerignore

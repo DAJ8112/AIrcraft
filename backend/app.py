@@ -137,7 +137,7 @@ def maintenance_prediction(payload: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(engineering_json, dict) or not engineering_json:
         raise HTTPException(status_code=400, detail="The analytics payload is empty or invalid.")
 
-    base_dir = Path(__file__).resolve().parent.parent
+    base_dir = Path(__file__).resolve().parent
     manual_pdf_path = str(base_dir / "data" / "AeroTech_ATX200_Maintenance_Manual.pdf")
 
     if not Path(manual_pdf_path).exists():
@@ -190,10 +190,12 @@ def maintenance_prediction(payload: dict[str, Any]) -> dict[str, Any]:
 if __name__ == "__main__":
     import uvicorn
 
+    base_dir = Path(__file__).resolve().parent
+
     uvicorn.run(
-        "src.app:app",
+        "app:app",
         host="127.0.0.1",
         port=8000,
         reload=True,
-        reload_dirs=[str(Path(__file__).resolve().parent)],
+        reload_dirs=[str(base_dir / "src")],
     )
