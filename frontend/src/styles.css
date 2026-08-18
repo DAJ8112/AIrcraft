@@ -15,6 +15,9 @@
 
 /* ─── 1. Tokens ─────────────────────────────────────────────── */
 
+/* Dark is the default theme. The light overrides live in the
+   [data-theme="light"] block below; index.html stamps the attribute
+   before first paint so there is no flash on load. */
 :root {
   color-scheme: dark;
 
@@ -22,7 +25,7 @@
   --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
   --font-body: 'IBM Plex Sans', 'Segoe UI', sans-serif;
 
-  /* Surfaces */
+  /* Surfaces — panels and insets both step away from the page */
   --bg-0: #000000;
   --bg-1: #060607;
   --bg-2: #0c0c0e;
@@ -32,18 +35,22 @@
   --line: rgba(255, 255, 255, 0.1);
   --line-faint: rgba(255, 255, 255, 0.06);
 
+  /* Page texture and panel corner brackets */
+  --dot: rgba(255, 255, 255, 0.03);
+  --bracket: rgba(255, 255, 255, 0.35);
+
   /* Text */
   --text-hi: #ececec;
   --text-mid: #9b9b9b;
   --text-low: #616161;
   --text-faint: #3c3c3c;
+  --text-max: #f2f2f2;
 
   /* Pastel accents */
   --led-green: #a3d9b1;
   --led-amber: #e6c797;
   --led-red: #e8a8a2;
   --led-blue: #a8c3e8;
-  --led-white: #f2f2f2;
 
   /* 8% tints */
   --tint-green: rgba(163, 217, 177, 0.08);
@@ -53,6 +60,9 @@
 
   /* Glow — blinking and loader LEDs only, never panels */
   --glow: 0 0 5px currentColor;
+
+  /* Unlit LED opacity, shared by the blink keyframe */
+  --led-off: 0.12;
 
   /* Spacing */
   --sp-1: 4px;
@@ -75,6 +85,45 @@
   --fs-title: 0.9375rem;
 }
 
+/* Light theme — technical print rather than inverted dark. Warm paper
+   page, white panels, ink hairlines, and the accents deepened so they
+   hold contrast on white. Only the tokens change; no rule below this
+   point knows which theme is active. */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg-0: #f0efec;
+  --bg-1: #fdfdfb;
+  --bg-2: #eceae5;
+
+  --line-strong: rgba(0, 0, 0, 0.22);
+  --line: rgba(0, 0, 0, 0.13);
+  --line-faint: rgba(0, 0, 0, 0.07);
+
+  --dot: rgba(0, 0, 0, 0.05);
+  --bracket: rgba(0, 0, 0, 0.32);
+
+  --text-hi: #1a1a1e;
+  --text-mid: #56565e;
+  --text-low: #7c7c85;
+  --text-faint: #a8a8b0;
+  --text-max: #0d0d10;
+
+  --led-green: #2f7d4f;
+  --led-amber: #8a6100;
+  --led-red: #c03a30;
+  --led-blue: #3567a8;
+
+  --tint-green: rgba(47, 125, 79, 0.1);
+  --tint-amber: rgba(138, 97, 0, 0.1);
+  --tint-red: rgba(192, 58, 48, 0.1);
+  --tint-blue: rgba(53, 103, 168, 0.1);
+
+  /* Glowing pixels read as smudges on paper */
+  --glow: none;
+  --led-off: 0.18;
+}
+
 /* ─── 2. Reset + base ───────────────────────────────────────── */
 
 *,
@@ -91,7 +140,7 @@ body {
 
 body {
   background-color: var(--bg-0);
-  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-image: radial-gradient(var(--dot) 1px, transparent 1px);
   background-size: 24px 24px;
   color: var(--text-hi);
   font-family: var(--font-body);
@@ -120,7 +169,7 @@ input {
 @keyframes led-blink {
   0%,
   100% {
-    opacity: 0.12;
+    opacity: var(--led-off);
   }
   50% {
     opacity: 1;
@@ -185,7 +234,7 @@ input {
 
 /* Panel frame — bordered box with corner brackets */
 .panel-frame {
-  --accent: rgba(255, 255, 255, 0.35);
+  --accent: var(--bracket);
   position: relative;
   border: 1px solid var(--line);
   background: var(--bg-1);
@@ -438,7 +487,7 @@ input {
   height: 8px;
   background: currentColor;
   box-shadow: var(--glow);
-  opacity: 0.12;
+  opacity: var(--led-off);
   animation: led-blink 1.2s steps(1, end) infinite;
 }
 
@@ -483,7 +532,7 @@ input {
 
 .matrix-loader.is-idle .matrix-grid i {
   animation: none;
-  opacity: 0.12;
+  opacity: var(--led-off);
   box-shadow: none;
 }
 
@@ -556,7 +605,7 @@ input {
   font: 700 1.125rem/1 var(--font-display);
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--led-white);
+  color: var(--text-max);
 }
 
 .brand-sub {
@@ -603,6 +652,38 @@ input {
   letter-spacing: 0.14em;
   color: currentColor;
   white-space: nowrap;
+}
+
+/* Theme toggle — segmented pair, active cell inverted */
+.theme-toggle {
+  display: flex;
+  border: 1px solid var(--line);
+}
+
+.theme-toggle button {
+  padding: 4px 9px;
+  background: transparent;
+  border: none;
+  color: var(--text-low);
+  font: 500 var(--fs-label) / 1 var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.theme-toggle button + button {
+  border-left: 1px solid var(--line);
+}
+
+.theme-toggle button:hover[aria-pressed='false'] {
+  color: var(--text-hi);
+  background: var(--line-faint);
+}
+
+.theme-toggle button[aria-pressed='true'] {
+  background: var(--text-hi);
+  color: var(--bg-1);
 }
 
 /* Status rail — live pipeline strip */
@@ -1523,7 +1604,7 @@ input {
 }
 
 :focus-visible {
-  outline: 2px solid var(--led-white);
+  outline: 2px solid var(--text-max);
   outline-offset: 2px;
   border-radius: 0;
 }

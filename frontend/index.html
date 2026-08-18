@@ -13,6 +13,25 @@
       rel="stylesheet"
     />
     <title>AeroCare Ops</title>
+    <script>
+      // Runs before first paint so the page never flashes the wrong theme.
+      // The storage key is mirrored in src/App.jsx as THEME_KEY.
+      (function () {
+        var stored;
+        try {
+          stored = localStorage.getItem('aerocare-theme');
+        } catch (e) {
+          stored = null;
+        }
+        var theme =
+          stored === 'light' || stored === 'dark'
+            ? stored
+            : window.matchMedia('(prefers-color-scheme: light)').matches
+              ? 'light'
+              : 'dark';
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

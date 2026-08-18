@@ -8,11 +8,18 @@ import MetricGrid from './components/MetricGrid';
 import AnalyticsPanel from './components/AnalyticsPanel';
 import RecommendationReport from './components/RecommendationReport';
 
+// Must match the key used by the theme bootstrap script in index.html.
+const THEME_KEY = 'aerocare-theme';
+
 function App() {
   const [excelFile, setExcelFile] = useState(null);
   const [manualFile, setManualFile] = useState(null);
   const [status, setStatus] = useState('Checking backend connection...');
   const [healthOk, setHealthOk] = useState(false);
+  // The bootstrap script already resolved stored choice vs. system preference.
+  const [theme, setTheme] = useState(() =>
+    document.documentElement.dataset.theme === 'light' ? 'light' : 'dark',
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [loadingPhase, setLoadingPhase] = useState('');
   const [analyticsResult, setAnalyticsResult] = useState(null);
@@ -34,6 +41,15 @@ function App() {
 
     pingBackend();
   }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch {
+      // Storage unavailable — the choice just won't survive a reload.
+    }
+  }, [theme]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -83,7 +99,7 @@ function App() {
 
   return (
     <div className="app-shell">
-      <TopBar status={status} healthOk={healthOk} />
+      <TopBar status={status} healthOk={healthOk} theme={theme} onThemeChange={setTheme} />
 
       <StatusRail
         hasFile={Boolean(excelFile)}
