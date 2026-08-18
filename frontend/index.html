@@ -3,11 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="AeroCare Maintenance — AI-powered post-landing operational intelligence platform for aircraft maintenance prediction and engineering analytics." />
-    <meta name="theme-color" content="#020a14" />
+    <meta name="description" content="AeroCare Ops — post-landing engineering analytics and maintenance guidance console." />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <title>Aircraft</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>AeroCare Ops</title>
+    <script>
+      // Runs before first paint so the page never flashes the wrong theme.
+      // The storage key is mirrored in src/App.jsx as THEME_KEY.
+      (function () {
+        var stored;
+        try {
+          stored = localStorage.getItem('aerocare-theme');
+        } catch (e) {
+          stored = null;
+        }
+        var theme =
+          stored === 'light' || stored === 'dark'
+            ? stored
+            : window.matchMedia('(prefers-color-scheme: light)').matches
+              ? 'light'
+              : 'dark';
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

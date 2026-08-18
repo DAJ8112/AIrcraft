@@ -22,16 +22,16 @@ async function request(path, options = {}) {
     return data;
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(`Failed to connect to backend at ${url}: ${error.message}`);
+      throw new Error(`Failed to connect to backend at ${url}: ${error.message}`, { cause: error });
     }
-    throw new Error(`Failed to connect to backend at ${url}`);
+    throw new Error(`Failed to connect to backend at ${url}`, { cause: error });
   }
 }
 
 export async function healthCheck() {
   try {
     return await request('/');
-  } catch (error) {
+  } catch {
     return request('/testing/health');
   }
 }
