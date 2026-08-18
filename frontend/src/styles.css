@@ -38,21 +38,21 @@
   --text-low: #616161;
   --text-faint: #3c3c3c;
 
-  /* LED accents */
-  --led-green: #3fe07f;
-  --led-amber: #ffb02e;
-  --led-red: #ff4a45;
-  --led-blue: #4d9fff;
+  /* Pastel accents */
+  --led-green: #a3d9b1;
+  --led-amber: #e6c797;
+  --led-red: #e8a8a2;
+  --led-blue: #a8c3e8;
   --led-white: #f2f2f2;
 
-  /* 10% tints */
-  --tint-green: rgba(63, 224, 127, 0.1);
-  --tint-amber: rgba(255, 176, 46, 0.1);
-  --tint-red: rgba(255, 74, 69, 0.1);
-  --tint-blue: rgba(77, 159, 255, 0.1);
+  /* 8% tints */
+  --tint-green: rgba(163, 217, 177, 0.08);
+  --tint-amber: rgba(230, 199, 151, 0.08);
+  --tint-red: rgba(232, 168, 162, 0.08);
+  --tint-blue: rgba(168, 195, 232, 0.08);
 
-  /* Glow — lit LEDs only, never panels */
-  --glow: 0 0 6px currentColor;
+  /* Glow — blinking and loader LEDs only, never panels */
+  --glow: 0 0 5px currentColor;
 
   /* Spacing */
   --sp-1: 4px;
@@ -176,10 +176,9 @@ input {
 }
 
 .split-view {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: var(--sp-5);
-  align-items: start;
 }
 
 /* ─── 4. Primitives ─────────────────────────────────────────── */
@@ -191,22 +190,6 @@ input {
   border: 1px solid var(--line);
   background: var(--bg-1);
   border-radius: var(--radius);
-}
-
-.panel-frame.tone-green {
-  --accent: var(--led-green);
-}
-
-.panel-frame.tone-blue {
-  --accent: var(--led-blue);
-}
-
-.panel-frame.tone-amber {
-  --accent: var(--led-amber);
-}
-
-.panel-frame.tone-red {
-  --accent: var(--led-red);
 }
 
 /* Solid-color gradient ticks are a positioning device for the
@@ -362,24 +345,6 @@ input {
 .btn:disabled {
   opacity: 0.35;
   cursor: not-allowed;
-}
-
-.btn.btn-green {
-  border-color: var(--led-green);
-  color: var(--led-green);
-}
-
-.btn.btn-green:hover:not(:disabled) {
-  background: var(--tint-green);
-}
-
-.btn.btn-blue {
-  border-color: var(--led-blue);
-  color: var(--led-blue);
-}
-
-.btn.btn-blue:hover:not(:disabled) {
-  background: var(--tint-blue);
 }
 
 /* File field */
@@ -563,14 +528,6 @@ input {
   color: var(--led-amber);
 }
 
-.section-head.tone-blue {
-  color: var(--led-blue);
-}
-
-.section-head.tone-green {
-  color: var(--led-green);
-}
-
 .section-count {
   margin-left: auto;
   color: var(--text-faint);
@@ -705,10 +662,6 @@ input {
   color: var(--led-green);
 }
 
-.rail-cell.is-done .rail-state .led {
-  box-shadow: var(--glow);
-}
-
 .rail-ok {
   font-size: 0.625rem;
   letter-spacing: 0.14em;
@@ -754,17 +707,14 @@ input {
 
 .metric-cell.tone-green .led {
   color: var(--led-green);
-  box-shadow: var(--glow);
 }
 
 .metric-cell.tone-amber .led {
   color: var(--led-amber);
-  box-shadow: var(--glow);
 }
 
 .metric-cell.tone-red .led {
   color: var(--led-red);
-  box-shadow: var(--glow);
 }
 
 .metric-value {
@@ -828,7 +778,7 @@ input {
 /* Gauges */
 .gauge-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1px;
   background: var(--line-faint);
   border: 1px solid var(--line);
@@ -879,7 +829,7 @@ input {
 }
 
 .gauge-fill.level-ok {
-  background: var(--led-green);
+  background: var(--text-low);
 }
 
 .gauge-fill.level-warn {
@@ -895,7 +845,7 @@ input {
   top: -3px;
   bottom: -3px;
   width: 1px;
-  background: var(--led-amber);
+  background: var(--line-strong);
 }
 
 /* Signal table */
@@ -952,31 +902,13 @@ input {
 
 .signal-change {
   text-align: right;
-}
-
-.signal-change.positive {
-  color: var(--led-amber);
-}
-
-.signal-change.negative {
-  color: var(--led-blue);
+  color: var(--text-mid);
 }
 
 .signal-trend {
   font-size: var(--fs-label);
   letter-spacing: 0.08em;
   white-space: nowrap;
-}
-
-.signal-trend.increasing {
-  color: var(--led-green);
-}
-
-.signal-trend.decreasing {
-  color: var(--led-red);
-}
-
-.signal-trend.stable {
   color: var(--text-low);
 }
 
@@ -1128,6 +1060,12 @@ input {
 }
 
 /* Violations */
+.violation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-2);
+}
+
 .violation-card {
   display: flex;
   flex-direction: column;
@@ -1135,10 +1073,6 @@ input {
   padding: var(--sp-3);
   border: 1px solid var(--line);
   background: var(--bg-2);
-}
-
-.violation-card + .violation-card {
-  margin-top: var(--sp-2);
 }
 
 .violation-header {
@@ -1509,13 +1443,17 @@ input {
     grid-template-columns: 1fr;
   }
 
-  .split-view {
-    grid-template-columns: 1fr;
-  }
-
   .sidebar {
     display: grid;
     grid-template-columns: 1fr 1fr;
+  }
+
+  .gauge-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .violation-grid {
+    grid-template-columns: 1fr;
   }
 }
 

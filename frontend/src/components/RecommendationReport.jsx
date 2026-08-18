@@ -70,26 +70,28 @@ function ViolationList({ violations }) {
         Threshold Violations
         <span className="section-count">N={violations.length}</span>
       </div>
-      {violations.map((v, i) => (
-        <div className="violation-card" key={i}>
-          <div className="violation-header">
-            <span className="violation-param">{v.parameter?.replace(/_/g, ' ')}</span>
-            <StatusTag tone="red">{v.severity}</StatusTag>
-          </div>
-          <div className="violation-values">
-            <div className="violation-val">
-              <label>Observed</label>
-              <span className="observed">{v.observed_value}</span>
+      <div className="violation-grid">
+        {violations.map((v, i) => (
+          <div className="violation-card" key={i}>
+            <div className="violation-header">
+              <span className="violation-param">{v.parameter?.replace(/_/g, ' ')}</span>
+              <StatusTag tone="red">{v.severity}</StatusTag>
             </div>
-            <div className="violation-val">
-              <label>Threshold</label>
-              <span>{v.manual_threshold}</span>
+            <div className="violation-values">
+              <div className="violation-val">
+                <label>Observed</label>
+                <span className="observed">{v.observed_value}</span>
+              </div>
+              <div className="violation-val">
+                <label>Threshold</label>
+                <span>{v.manual_threshold}</span>
+              </div>
             </div>
+            {v.explanation && <div className="violation-explanation">{v.explanation}</div>}
+            <ManualRef reference={v.manual_reference} />
           </div>
-          {v.explanation && <div className="violation-explanation">{v.explanation}</div>}
-          <ManualRef reference={v.manual_reference} />
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
@@ -98,7 +100,7 @@ function RootCause({ rootCause }) {
   if (!rootCause) return null;
   return (
     <div>
-      <div className="section-head tone-amber">
+      <div className="section-head">
         <span className="led" aria-hidden="true" />
         Root Cause
       </div>
@@ -246,7 +248,6 @@ export default function RecommendationReport({ report, isLoading }) {
       index="B"
       code="//004/"
       title="AI Maintenance Recommendation"
-      tone="blue"
       headerRight={<StatusTag tone="blue">AI</StatusTag>}
     >
       {isLoading ? (

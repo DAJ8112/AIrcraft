@@ -2,7 +2,7 @@ import PanelFrame from './PanelFrame';
 
 export default function UploadPanel({ onFileChange, onSubmit, isLoading, loadingPhase }) {
   return (
-    <PanelFrame index="1" code="//002/" title="Flight Data Intake" tone="green">
+    <PanelFrame index="1" code="//002/" title="Flight Data Intake">
       <form onSubmit={onSubmit} className="upload-form">
         <label className="file-field">
           <span>Input // Telemetry .xlsx</span>
@@ -18,7 +18,7 @@ export default function UploadPanel({ onFileChange, onSubmit, isLoading, loading
           aircraft condition.
         </p>
 
-        <button type="submit" className="btn btn-green" disabled={isLoading}>
+        <button type="submit" className="btn" disabled={isLoading}>
           {isLoading && loadingPhase === 'analytics' ? 'Running analytics...' : '▸ Run Analytics'}
         </button>
       </form>

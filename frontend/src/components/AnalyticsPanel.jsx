@@ -29,7 +29,7 @@ export default function AnalyticsPanel({ analyticsResult, isLoading }) {
   }, [currentRecord]);
 
   return (
-    <PanelFrame index="A" code="//003/" title="Engineering Analytics" tone="green">
+    <PanelFrame index="A" code="//003/" title="Engineering Analytics">
       {isLoading ? (
         <MatrixLoader tone="green" label="Processing telemetry" />
       ) : analyticsResult ? (

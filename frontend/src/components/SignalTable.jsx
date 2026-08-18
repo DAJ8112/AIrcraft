@@ -25,10 +25,10 @@ export default function SignalTable({ signals }) {
         <div key={item.column} className="signal-row">
           <span className="signal-name">{item.column.replace(/_/g, ' ')}</span>
           <span className="signal-value">{item.latest_value.toLocaleString()}</span>
-          <span className={`signal-change ${item.change_percent >= 0 ? 'positive' : 'negative'}`}>
+          <span className="signal-change">
             {item.change_percent > 0 ? '+' : ''}{item.change_percent.toFixed(1)}%
           </span>
-          <span className={`signal-trend ${item.trend_direction.toLowerCase()}`}>
+          <span className="signal-trend">
             {getTrendGlyph(item.trend_direction)} {item.trend_direction}
           </span>
         </div>

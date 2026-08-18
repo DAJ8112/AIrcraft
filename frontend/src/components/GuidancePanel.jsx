@@ -2,7 +2,7 @@ import PanelFrame from './PanelFrame';
 
 export default function GuidancePanel({ manualFile, onFileChange, onGenerate, disabled, isLoading, loadingPhase }) {
   return (
-    <PanelFrame index="2" code="//005/" title="Maintenance Guidance" tone="blue">
+    <PanelFrame index="2" code="//005/" title="Maintenance Guidance">
       <div className="panel-stack">
         <label className="file-field">
           <span>Input // Maintenance Manual .pdf</span>
@@ -17,7 +17,7 @@ export default function GuidancePanel({ manualFile, onFileChange, onGenerate, di
           {manualFile ? `STAGED: ${manualFile.name}` : 'STAGED LOCALLY — NOT LINKED TO ANALYSIS'}
         </p>
 
-        <button className="btn btn-blue" onClick={onGenerate} disabled={disabled}>
+        <button className="btn" onClick={onGenerate} disabled={disabled}>
           {isLoading && loadingPhase === 'ai' ? 'Running AI analysis...' : '▸ Run AI Analysis'}
         </button>
       </div>
