@@ -9,7 +9,7 @@ import AnalyticsPanel from './components/AnalyticsPanel';
 import RecommendationReport from './components/RecommendationReport';
 
 // Must match the key used by the theme bootstrap script in index.html.
-const THEME_KEY = 'aerocare-theme';
+const THEME_KEY = 'aircraft-theme';
 
 function App() {
   const [excelFile, setExcelFile] = useState(null);

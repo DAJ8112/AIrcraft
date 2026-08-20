@@ -1,5 +1,5 @@
 /* ============================================================
-   AEROCARE OPS — FUI CONSOLE STYLESHEET
+   AIRCRAFT OPS — FUI CONSOLE STYLESHEET
    ------------------------------------------------------------
    1. Tokens
    2. Reset + base
@@ -606,6 +606,13 @@ input {
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--text-max);
+}
+
+/* AI // RCRAFT — the "AI" wears the same blue the console uses
+   everywhere else to mark model output, so the wordmark reads as
+   part of the system rather than as decoration. */
+.brand-ai {
+  color: var(--led-blue);
 }
 
 .brand-sub {
