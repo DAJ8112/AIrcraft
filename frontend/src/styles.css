@@ -1,5 +1,5 @@
 /* ============================================================
-   AEROCARE OPS — FUI CONSOLE STYLESHEET
+   AIRCRAFT OPS — FUI CONSOLE STYLESHEET
    ------------------------------------------------------------
    1. Tokens
    2. Reset + base
@@ -608,6 +608,13 @@ input {
   color: var(--text-max);
 }
 
+/* AI // RCRAFT — the "AI" wears the same blue the console uses
+   everywhere else to mark model output, so the wordmark reads as
+   part of the system rather than as decoration. */
+.brand-ai {
+  color: var(--led-blue);
+}
+
 .brand-sub {
   font: 400 var(--fs-label) / 1 var(--font-mono);
   letter-spacing: 0.12em;
@@ -752,10 +759,15 @@ input {
 
 .metric-grid {
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 1px;
   background: var(--line-faint);
   border: 1px solid var(--line);
+}
+
+/* Row 1 = identity/config (A/C double-wide + ENG/CYC/OVH), row 2 = the 5 signals. */
+.metric-cell:first-child {
+  grid-column: span 2;
 }
 
 .metric-cell {
@@ -774,15 +786,20 @@ input {
   gap: var(--sp-2);
 }
 
-.metric-code {
+.metric-label {
   font: 600 0.625rem/1 var(--font-mono);
   letter-spacing: 0.14em;
   color: var(--text-low);
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .metric-cell .led {
   width: 6px;
   height: 6px;
+  flex-shrink: 0;
   color: var(--text-faint);
 }
 
@@ -1517,6 +1534,10 @@ input {
   .metric-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .metric-cell:first-child {
+    grid-column: auto;
+  }
 }
 
 @media (max-width: 1100px) {
@@ -1547,6 +1568,14 @@ input {
     grid-template-columns: 1fr;
   }
 
+  .metric-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .metric-cell:first-child {
+    grid-column: span 2;
+  }
+
   .status-rail {
     grid-template-columns: 1fr;
   }
@@ -1574,6 +1603,10 @@ input {
 @media (max-width: 480px) {
   .metric-grid {
     grid-template-columns: 1fr;
+  }
+
+  .metric-cell:first-child {
+    grid-column: auto;
   }
 
   .signal-row,

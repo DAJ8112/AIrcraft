@@ -4,7 +4,9 @@ export default function TopBar({ status, healthOk, theme, onThemeChange }) {
   return (
     <header className="topbar">
       <div className="topbar-brand">
-        <span className="brand-name">Aerocare</span>
+        <span className="brand-name">
+          <span className="brand-ai">Ai</span>rcraft
+        </span>
         <span className="brand-sub">// MAINTENANCE OPS</span>
       </div>
       <div className="topbar-status">

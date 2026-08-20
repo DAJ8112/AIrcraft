@@ -37,7 +37,7 @@ export default function MetricGrid({ analyticsResult }) {
         code: 'OVH',
         label: 'Since Overhaul',
         value: record.Cycles_Since_Overhaul || 'N/A',
-        sub: `Last maint ${record.Last_Maintenance_Date || 'N/A'}`,
+        sub: `Last maint ${String(record.Last_Maintenance_Date || 'N/A').split('T')[0]}`,
         tone: 'neutral',
       },
       {
@@ -83,9 +83,9 @@ export default function MetricGrid({ analyticsResult }) {
   return (
     <div className="metric-grid">
       {metrics.map((metric) => (
-        <div className={`metric-cell${metric.tone !== 'neutral' ? ` tone-${metric.tone}` : ''}`} key={metric.code} title={metric.label}>
+        <div className={`metric-cell${metric.tone !== 'neutral' ? ` tone-${metric.tone}` : ''}`} key={metric.code}>
           <div className="metric-top">
-            <span className="metric-code">{metric.code}</span>
+            <span className="metric-label">{metric.label}</span>
             <span className="led" aria-hidden="true" />
           </div>
           <strong className="metric-value">{metric.value}</strong>

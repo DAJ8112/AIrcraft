@@ -1,4 +1,4 @@
-# AeroCare Ops — Frontend
+# Aircraft — Frontend
 
 React + Vite console for post-landing engineering analytics and AI maintenance guidance.
 
